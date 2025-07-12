@@ -46,10 +46,7 @@ const Footer = () => {
                         <li>sufiyanmushtaque@gmail.com</li>
                     </ul>
                 </div>
-
-                
-
-                
+ 
             </div>
             <div className='flex flex-col md:flex-row gap-2 items-center justify-between py-5'>
                 <p>© {new Date().getFullYear()} Brand. All rights reserved.</p>
