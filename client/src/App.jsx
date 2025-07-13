@@ -28,7 +28,7 @@ const App = () => {
         <Route path='/owner' element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path='add-car' element={<AddCar />} />
-          <Route path='manage-car' element={<ManageCars />} />
+          <Route path='manage-cars' element={<ManageCars />} />
           <Route path='manage-bookings' element={<ManageBookings />} />
         </Route>
       </Routes>
