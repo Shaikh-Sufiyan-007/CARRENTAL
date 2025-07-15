@@ -28,7 +28,7 @@ export const registeredUser = async (req, res) => {
         return res.status(201).json({ success: true, message: "User registered successfully", token });
         
     } catch (error) {
-        console.log(error.message);
+        console.log("Error in registeredUser", error.message);
         return res.status(500).json({ success: false, message: error.message });
     }
 }
@@ -53,7 +53,17 @@ export const userLogin = async (req, res) => {
         const token = GenerateToken(user._id.toString());
         return res.status(200).json({ success: true, message: "User logged in successfully", token });
     } catch (error) {
-        console.log(error.message);
+        console.log("Error in userLogin", error.message);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+export const getUserData = async (req, res) => {
+    try {
+        const {user} = req;
+        res.status(200).json({ success: true, message: "User data fetched successfully", user });
+    } catch (error) {
+        console.log("Error in getUserData", error.message);
         return res.status(500).json({ success: false, message: error.message });
     }
 }
