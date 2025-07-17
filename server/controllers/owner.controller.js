@@ -136,3 +136,38 @@ export const getDashboardData = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 }
+
+export const updateUserImage = async (req, res) => {
+  try {
+    const {_id} = req.user;
+
+     const imageFile = req.file;
+
+    const fileBuffer = fs.readFileSync(imageFile.path);
+    const response = await imagekit.upload({
+      file: fileBuffer,
+      fileName: imageFile.originalname,
+      folder: "/users",
+    });
+
+    // For URL Generation, works for both images and videos
+    var optimizedImageURL = imagekit.url({
+      path: response.filePath,
+      transformation: [
+        {width: '400'}, // width resizing
+        {quality: 'auto'}, //Add compression
+        {format: 'webp'} // convert to modern format
+    ],
+    });
+
+    const image = optimizedImageURL;
+
+    await User.findByIdAndUpdate(_id, { image });
+
+    res.status(200).json({ success: true, message: "Image updated successfully", image });
+
+  } catch (error) {
+    console.log("Error in updateUserImage", error.message);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+}
