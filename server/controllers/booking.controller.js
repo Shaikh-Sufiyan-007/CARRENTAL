@@ -91,3 +91,24 @@ export const getOwnerBookings = async(req, res) => {
         return res.status(500).json({ success: false, message: error.message });
     }
 }
+
+export const changeBookingStatus = async(req, res) => {
+    try {
+        const {_id} = req.user;
+        const {bookingId, status} = req.body;
+
+        const booking = await Booking.findById(bookingId);
+
+        if(booking.owner.toString() !== _id.toString()) {
+            return res.status(401).json({success: false, message: "Unauthorized"});
+        }
+
+        booking.status = status;
+        await booking.save();
+
+        res.status(200).json({success: true, message: "Booking status changed successfully", booking});
+    } catch (error) {
+        console.log("Error in changeBookingStatus", error.message);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
