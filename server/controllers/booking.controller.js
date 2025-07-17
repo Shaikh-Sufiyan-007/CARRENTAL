@@ -63,3 +63,31 @@ export const createBooking = async(req, res) => {
         return res.status(500).json({ success: false, message: error.message });
     }
 }
+
+export const getUserBookings = async(req, res) => {
+    try {
+        const {_id} = req.user;
+        const bookings = await Booking.find({user: _id}).populate('car').sort({createdAt: -1});
+
+        res.status(200).json({success: true, message: "Bookings fetched successfully", bookings});
+
+    } catch (error) {
+        console.log("Error in getUserBookings", error.message);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+export const getOwnerBookings = async(req, res) => {
+    try {
+        if(req.user.role !== "owner") {
+            return res.status(401).json({success: false, message: "Unauthorized"});
+        }
+
+        const bookings = await Booking.find({owner: req.user._id}).populate('car user').select('-user.password').sort({createdAt: -1});
+
+        res.status(200).json({success: true, message: "Bookings fetched successfully", bookings});
+    } catch (error) {
+        console.log("Error in getOwnerBookings", error.message);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
