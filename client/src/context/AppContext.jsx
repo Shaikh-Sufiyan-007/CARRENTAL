@@ -32,7 +32,8 @@ export const AppProvider = ({children}) => {
                 navigate('/')
             }
         } catch (error) {
-            toast.error(error.message)
+            // toast.error(error.message)
+            console.log(error.message)
         }
     }
 
@@ -66,7 +67,7 @@ export const AppProvider = ({children}) => {
     useEffect(() => {
         axios.defaults.headers.common['Authorization'] = `${token}` 
         fetchUser()
-    })
+    }, [token])
 
     const value = {
         navigate, currency, axios, user, setUser,
@@ -74,6 +75,7 @@ export const AppProvider = ({children}) => {
         showLogin, setShowLogin, logout, fetchCars, cars, setCars,
         pickupDate, setPickupDate, returnDate, setReturnDate
     }
+
     return (
         <AppContext.Provider value={value}>
             {children}

@@ -3,7 +3,6 @@ import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 
 const CarCards = ({car}) => {
-    console.log(car.isAvaliable)
     const currency = import.meta.env.VITE_CURRENCY
     const navigate = useNavigate()
   return (

@@ -8,8 +8,6 @@ const Navbar = () => {
 
   const {setShowLogin, user, logout, isOwner, axios, setIsOwner, token} = useAppContext()
 
-  console.log(token)
-  console.log(user)
 
   const location = useLocation();
   const [open, setOpen] = useState(false);
