@@ -34,7 +34,7 @@ const AddCar = () => {
       formData.append('carData', JSON.stringify(car))
 
       console.log(car)
-      const {data} = await axios.post('/api/owner/add-car', {formData})
+      const {data} = await axios.post('/api/owner/add-car', formData, {headers: {'Content-Type': 'multipart/form-data'}})
       if(data.success) {
         toast.success(data.message)
         setImage(null)
